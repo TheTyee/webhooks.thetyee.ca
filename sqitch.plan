@@ -2,3 +2,5 @@
 %project=webhooks
 %uri=https://github.com/phillipadsmith/webhooks.thetyee.ca
 
+appschema 2013-07-07T21:40:22Z phillipadsmith <ps@phillipadsmith.com>
+# Add schema for webhooks
