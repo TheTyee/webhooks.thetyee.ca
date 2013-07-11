@@ -79,7 +79,7 @@ helper authorized => sub {
 
 any '/wufoo' => sub {
     my $self = shift;
-    my $hook = $self->req->query_params->to_hash;
+    my $hook = $self->req->params->to_hash;
     return $self->render( { data => '', status => '401' } )
         unless $self->authorized( $hook );
     my $subscriber = $self->parse_webhooks_data( $hook );
