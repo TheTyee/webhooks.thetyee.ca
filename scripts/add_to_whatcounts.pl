@@ -10,7 +10,8 @@ use Try::Tiny;
 use Data::Dumper;
 
 # Get the configuration
-my $config = plugin 'JSONConfig' => { file => '../app.development.json' };
+my $mode = $ARGV[0];
+my $config = plugin 'JSONConfig' => { file => "../app.$mode.json" };
 
 # Get a UserAgent
 my $ua = Mojo::UserAgent->new;
