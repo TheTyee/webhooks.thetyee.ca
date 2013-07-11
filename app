@@ -67,7 +67,7 @@ helper parse_webhooks_data => sub {
 helper authorized => sub {
     my $self      = shift;
     my $hook      = shift;
-    my $handshake = '';
+    my $handshake = 'none';
     $handshake = $hook->{'HandshakeKey'};
     my $auth;
     $auth = $handshake eq $config->{'wufoo_handshake'} ? 'authorized' : '';
