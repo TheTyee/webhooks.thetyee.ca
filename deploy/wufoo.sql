@@ -14,7 +14,9 @@ CREATE TABLE webhooks.wufoo (
     date_created TIMESTAMP  NOT NULL,
     form_data       TEXT    NOT NULL,
     wc_status       BOOLEAN DEFAULT FALSE NOT NULL,
-    wc_response     TEXT    NULL
+    wc_response     TEXT    NULL,
+    ip_address      INET    NOT NULL,
+    form_name       TEXT    NOT NULL
 );
 
 COMMIT;
