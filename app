@@ -48,7 +48,7 @@ helper parse_webhooks_data => sub {
         form_url     => $form->{'Url'},
         form_data    => $json->encode( $post ),
         ip_address   => $post->{'IP'},
-        form_name   => $form->{'Name'},
+        form_name    => $form->{'Name'},
     };
     for my $value ( @{ $field->{'Fields'} } ) {
         if ( $value->{'Type'} eq 'email' ) {
@@ -65,25 +65,26 @@ helper parse_webhooks_data => sub {
 };
 
 helper authorized => sub {
-    my $self = shift;
-    my $hook = shift;
+    my $self      = shift;
+    my $hook      = shift;
     my $handshake = $hook->{'HandshakeKey'};
     my $auth;
     $auth = $handshake eq $config->{'wufoo_handshake'} ? 'authorized' : '';
-    $self->app->log->debug('Unauthorzied access attempt: ' . Dumper( $hook ) ) if !$auth;
+    $self->app->log->debug(
+        'Unauthorzied access attempt: ' . Dumper( $hook ) )
+        if !$auth;
     return $auth;
 };
 
 any '/wufoo' => sub {
-    my $self       = shift;
-    my $hook       = $self->req->query_params->to_hash;
-    return $self->render({ data => '', status => '401'}) unless $self->authorized( $hook );
+    my $self = shift;
+    my $hook = $self->req->query_params->to_hash;
+    return $self->render( { data => '', status => '401' } )
+        unless $self->authorized( $hook );
     my $subscriber = $self->parse_webhooks_data( $hook );
     my $result     = $self->find_or_new( $subscriber );
     $self->app->log->debug( Dumper( $subscriber ) );
-    $self->respond_to(
-        any => { 'data' => '', status => 200 },
-    );
+    $self->respond_to( any => { 'data' => '', status => 200 }, );
 };
 
 app->secret( $config->{'app_secret'} );
