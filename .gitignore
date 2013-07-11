@@ -1,2 +1,2 @@
 schema.conf
-app.development.json
+*.json
