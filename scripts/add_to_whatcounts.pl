@@ -5,6 +5,7 @@ use WebHooks::Schema;
 use Modern::Perl '2013';
 use Mojolicious::Lite;
 use Mojo::UserAgent;
+use Mojo::Util qw(trim);
 use utf8::all;
 use Try::Tiny;
 use Data::Dumper;
@@ -115,6 +116,7 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
     my $type_taken_date = $taken->ymd();
     my $search;
     my $result;
+    $email = trim $email;
     my %args = (
         r => $wc_realm,
         p => $wc_pw,
