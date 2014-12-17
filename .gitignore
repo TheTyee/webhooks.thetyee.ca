@@ -1,4 +1,5 @@
 .DS_Store
 schema.conf
+sqitch.conf
 *.json
 share.html
