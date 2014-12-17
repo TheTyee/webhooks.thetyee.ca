@@ -25,7 +25,6 @@ my $wc_pw      = $config->{'wc_password'};
 
 main();
 
-
 #-------------------------------------------------------------------------------
 #  Subroutines
 #-------------------------------------------------------------------------------
@@ -102,6 +101,9 @@ sub _determine_type
     elsif ( $form_name =~ /^contest:/i ) {
         $type = 'contest';
     }
+    elsif ( $form_name =~ /^survey:/i ) {
+        $type = 'survey';
+    }
     return $type;
 }
 
@@ -141,9 +143,12 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
 
         # If we found a subscriber, it's an update, if not a subscribe
         cmd => $search ? 'update' : 'sub',
-        list_id => $wc_list_id,
+        list_id               => $wc_list_id,
+        override_confirmation => '1',
+        force_sub             => '1',
+        format                => '2',
         data =>
-            "email,format,override_confirmation,force_sub,custom_wufoo_import,$frequency,$type_str,$type_taken^$email,2,1,1,1,1,1,$type_taken_date"
+            "email,custom_wufoo_import,$frequency,$type_str,$type_taken^$email,1,1,1,$type_taken_date"
     };
     my $tx = $ua->post( $API => form => $update_or_sub );
     if ( my $res = $tx->success ) {
