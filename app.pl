@@ -166,7 +166,7 @@ post '/recurly' => sub {
      } elsif ($hooktype eq 'expired_subscription_notification' || $hooktype eq 'canceled_subscription_notification') {
         $update_params{'custom_builder_last_trans_date'} = $xms->{$hooktype}{subscription}{canceled_at}{content};        
         $update_params{'custom_builder_cancelled_date'} = $xms->{$hooktype}{subscription}{canceled_at}{content};
-        $update_params{'custom_builder_plan'} = 'canceled';
+        $update_params{'custom_builder_plan'} = 'cancelled';
 
     } else {
             $self->app->log->debug('transtype is ' . $hooktype);    
@@ -257,7 +257,7 @@ post '/recurly' => sub {
   }
   
   if ($update_params{'custom_builder_cancelled_date'}) {
-    $recurlyupdate{"plan_name"} = "canceled"
+    $recurlyupdate{"plan_name"} = "cancelled"
   }
                       
                    $rs->update(\%recurlyupdate);
