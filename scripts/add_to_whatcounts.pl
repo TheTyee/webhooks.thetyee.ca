@@ -148,7 +148,7 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
         force_sub             => '1',
         format                => '2',
         data =>
-            "email,custom_wufoo_import,$frequency,$type_str,$type_taken^$email,1,1,1,$type_taken_date"
+            "email,custom_wufoo_import,$frequency,$type_str,$type_taken,custom_pref_tyeenews_casl,custom_pref_sponsor_casl^$email,1,1,1,$type_taken_date,1,1"
     };
     my $tx = $ua->post( $API => form => $update_or_sub );
     if ( my $res = $tx->success ) {
