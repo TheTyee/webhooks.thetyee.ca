@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/b	in/env perl
 use Mojolicious::Lite;
 use Mojo::JSON;
 use Modern::Perl '2013';
@@ -6,11 +6,10 @@ use Try::Tiny;
 use Data::Dumper;
 use WebHooks::Schema;
 use Support::Schema;
-
+use Mojo::JSON qw(decode_json encode_json);
 
 my $config = plugin 'JSONConfig';
-my $json   = Mojo::JSON->new;
-
+# my $json   = Mojo::JSON->new;
 
 # Get a UserAgent
 my $ua = Mojo::UserAgent->new;
@@ -68,13 +67,13 @@ helper find_or_new => sub {
 helper parse_webhooks_data => sub {
     my $self  = shift;
     my $post  = shift;
-    my $field = $json->decode( $post->{'FieldStructure'} );
-    my $form  = $json->decode( $post->{'FormStructure'} );
+    my $field = decode_json( $post->{'FieldStructure'} );
+    my $form  = decode_json( $post->{'FormStructure'} );
     my $data  = {
         entry_id     => $form->{'Hash'} . '-' . $post->{'EntryId'},
         date_created => $post->{'DateCreated'},
         form_url     => $form->{'Url'},
-        form_data    => $json->encode( $post ),
+        form_data    => encode_json( $post ),
         ip_address   => $post->{'IP'},
         form_name    => $form->{'Name'},
     };
@@ -292,5 +291,5 @@ post '/recurly' => sub {
 };
 
 
-app->secret( $config->{'app_secret'} );
+# app->secret( $config->{'app_secret'} );
 app->start;
