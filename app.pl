@@ -1,13 +1,12 @@
 #!/usr/bin/env perl
 use Mojolicious::Lite;
-use Mojo::JSON;
+use Mojo::JSON qw(decode_json encode_json);
 use Modern::Perl '2013';
 use Try::Tiny;
 use Data::Dumper;
 use WebHooks::Schema;
 
 my $config = plugin 'JSONConfig';
-my $json   = Mojo::JSON->new;
 
 helper dbh => sub {
     my $schema = WebHooks::Schema->connect( $config->{'pg_dsn'},
@@ -40,13 +39,13 @@ helper find_or_new => sub {
 helper parse_webhooks_data => sub {
     my $self  = shift;
     my $post  = shift;
-    my $field = $json->decode( $post->{'FieldStructure'} );
-    my $form  = $json->decode( $post->{'FormStructure'} );
+    my $field = json_decode( $post->{'FieldStructure'} );
+    my $form  = json_decode( $post->{'FormStructure'} );
     my $data  = {
         entry_id     => $form->{'Hash'} . '-' . $post->{'EntryId'},
         date_created => $post->{'DateCreated'},
         form_url     => $form->{'Url'},
-        form_data    => $json->encode( $post ),
+        form_data    => json_encode( $post ),
         ip_address   => $post->{'IP'},
         form_name    => $form->{'Name'},
     };
