@@ -87,5 +87,5 @@ any '/wufoo' => sub {
     $self->respond_to( any => { 'data' => '', status => 200 }, );
 };
 
-app->secret( $config->{'app_secret'} );
+app->secrets([$config->{'app_secret'}]);
 app->start;
