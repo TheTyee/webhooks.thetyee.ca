@@ -39,13 +39,13 @@ helper find_or_new => sub {
 helper parse_webhooks_data => sub {
     my $self  = shift;
     my $post  = shift;
-    my $field = json_decode( $post->{'FieldStructure'} );
-    my $form  = json_decode( $post->{'FormStructure'} );
+    my $field = decode_json( $post->{'FieldStructure'} );
+    my $form  = decode_json( $post->{'FormStructure'} );
     my $data  = {
         entry_id     => $form->{'Hash'} . '-' . $post->{'EntryId'},
         date_created => $post->{'DateCreated'},
         form_url     => $form->{'Url'},
-        form_data    => json_encode( $post ),
+        form_data    => encode_json( $post ),
         ip_address   => $post->{'IP'},
         form_name    => $form->{'Name'},
     };
