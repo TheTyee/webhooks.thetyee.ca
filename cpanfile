@@ -1,9 +1,12 @@
 # Basic stack
 # - Web framework
 # - SSL support
-requires 'Mojolicious', '5.61';
-requires 'IO::Socket::SSL', '1.8.4';
-requires 'Net::SSLeay', '1.8.2';
+requires 'Modern::Perl', '';
+requires 'Mojolicious', '';
+requires 'IO::Socket::SSL', '';
+requires 'Net::SSLeay', '';
 requires 'Mojo::Pg', '';
-requires 'IO::Socket::SSL', '1.8.4';
-requires 'Net::SSLeay', '1.8.2';
+requires 'DBIx::Class::Schema', '';
+requires 'DBIx::Class::TimeStamp', '';
+requires 'IO::Socket::SSL', '';
+requires 'Net::SSLeay', '';
