@@ -76,7 +76,7 @@ helper authorized => sub {
     return $auth;
 };
 
-any '/' => sub {
+any '/wufoo' => sub {
     my $self = shift;
     my $hook = $self->req->params->to_hash;
     return $self->render( { data => '', status => '401' } )
