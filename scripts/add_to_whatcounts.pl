@@ -144,7 +144,7 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
         # If we found a subscriber, it's an update, if not a subscribe
         cmd => $search ? 'update' : 'sub',
         list_id               => $wc_list_id,
-        override_confirmation => '1', Removed in Feb 2018 to require double opt-in
+        override_confirmation => '1', # Removed in Feb 2018 to require double opt-in
         force_sub             => '1',
         format                => '2',
         data =>
