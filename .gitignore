@@ -3,3 +3,6 @@ schema.conf
 sqitch.conf
 *.json
 share.html
+/local
+/.perl-version
+/cpanfile.snapshot
