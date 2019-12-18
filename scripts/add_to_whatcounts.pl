@@ -138,6 +138,7 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
         my ( $err, $code ) = $s->error;
         $result = $code ? "$code response: $err" : "Connection error: $err";
     }
+my $campaign = "wufoo_poll";
     my $update_or_sub = {
         %args,
 
@@ -148,7 +149,7 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
         force_sub             => '1',
         format                => '2',
         data =>
-            "email,custom_wufoo_import,$frequency,$type_str,$type_taken,custom_pref_tyeenews_casl,custom_pref_sponsor_casl^$email,1,1,1,$type_taken_date,1,1"
+            "email,custom_campaign,custom_wufoo_import,$frequency,$type_str,$type_taken,custom_pref_tyeenews_casl,custom_pref_sponsor_casl^$email,$campaign,1,1,1,$type_taken_date,1,1"
     };
     my $tx = $ua->post( $API => form => $update_or_sub );
     if ( my $res = $tx->success ) {
