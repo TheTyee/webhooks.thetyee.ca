@@ -87,10 +87,6 @@ sub _determine_frequency
         $frequency = 'custom_pref_enews_daily';
     }
 
-    elsif ( $subsciption =~ /national/i ) {
-	$frequency = 'custom_pref_enews_national';
-    }
-
     # Return undefined for no frequency selection (thus, no subscription)
     return $frequency;
 }
@@ -142,17 +138,18 @@ sub _create_or_update {   # Post the vitals to WhatCounts, return the resposne
         my ( $err, $code ) = $s->error;
         $result = $code ? "$code response: $err" : "Connection error: $err";
     }
+my $campaign = "wufoo_poll";
     my $update_or_sub = {
         %args,
 
         # If we found a subscriber, it's an update, if not a subscribe
         cmd => $search ? 'update' : 'sub',
         list_id               => $wc_list_id,
-        override_confirmation => '1',
+        override_confirmation => '1', # Removed in Feb 2018 to require double opt-in
         force_sub             => '1',
         format                => '2',
         data =>
-            "email,custom_wufoo_import,$frequency,$type_str,$type_taken^$email,1,1,1,$type_taken_date"
+            "email,custom_campaign,custom_wufoo_import,$frequency,$type_str,$type_taken,custom_pref_tyeenews_casl,custom_pref_sponsor_casl^$email,$campaign,1,1,1,$type_taken_date,1,1"
     };
     my $tx = $ua->post( $API => form => $update_or_sub );
     if ( my $res = $tx->success ) {
